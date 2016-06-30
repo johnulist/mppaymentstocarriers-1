@@ -8,6 +8,7 @@ Restrict payment methods to selected carriers
 - Upload the module through FTP or your Back Office
 - Install the module
 - Check if there are any errors and correct them if necessary
+- Edit the carrier restrictions on the page "Modules and Services > Payment"
 - Profit!
 
 ## Compatibility
