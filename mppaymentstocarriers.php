@@ -33,7 +33,7 @@ class MPPaymentsToCarriers extends Module
     {
         $this->name = 'mppaymentstocarriers';
         $this->tab = 'administration';
-        $this->version = '1.0.0';
+        $this->version = '1.1.0';
         $this->author = 'Mijn Presta';
         $this->need_instance = 0;
 
