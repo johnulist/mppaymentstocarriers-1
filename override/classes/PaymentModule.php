@@ -4,6 +4,10 @@ class PaymentModule extends PaymentModuleCore
 {
     public function install()
     {
+        if (!Module::isEnabled('mppaymentstocarriers')) {
+            return parent::install();
+        }
+
         if (!parent::install()) {
             return false;
         }
@@ -45,6 +49,10 @@ class PaymentModule extends PaymentModuleCore
 
     public function uninstall()
     {
+        if (!Module::isEnabled('mppaymentstocarriers')) {
+            return parent::uninstall();
+        }
+
         if (!Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'module_country` WHERE `id_module` = '.(int)$this->id)
             || !Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'module_currency` WHERE `id_module` = '.(int)$this->id)
             || !Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'module_group` WHERE `id_module` = '.(int)$this->id)
@@ -57,6 +65,10 @@ class PaymentModule extends PaymentModuleCore
 
     public function addCheckboxCarrierRestrictionsForModule(array $shops = array())
     {
+        if (!Module::isEnabled('mppaymentstocarriers')) {
+            return parent::addCheckboxCountryRestrictionsForModule($shops);
+        }
+
         if (!$shops) {
             $shops = Shop::getShops(true, null, true);
         }

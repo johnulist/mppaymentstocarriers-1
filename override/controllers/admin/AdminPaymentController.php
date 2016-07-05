@@ -4,8 +4,12 @@ class AdminPaymentController extends AdminPaymentControllerCore
 {
     public function __construct()
     {
+        if (!Module::isEnabled('mppaymentstocarriers')) {
+            return parent::__construct();
+        }
+
         $this->bootstrap = true;
-        parent::__construct();
+        AdminController::__construct();
 
         $idShop = Context::getContext()->shop->id;
 
@@ -82,6 +86,10 @@ class AdminPaymentController extends AdminPaymentControllerCore
 
     public function initProcess()
     {
+        if (!Module::isEnabled('mppaymentstocarriers')) {
+            return parent::initProcess();
+        }
+
         if ($this->tabAccess['edit'] === '1') {
             if (Tools::isSubmit('submitModulecountry')) {
                 $this->action = 'country';
@@ -99,6 +107,10 @@ class AdminPaymentController extends AdminPaymentControllerCore
 
     protected function saveRestrictions($type)
     {
+        if (!Module::isEnabled('mppaymentstocarriers')) {
+            return parent::saveRestrictions($type);
+        }
+
         // Delete type restrictions for active module.
         $modules = array();
         foreach ($this->payment_modules as $module) {
@@ -159,6 +171,10 @@ class AdminPaymentController extends AdminPaymentControllerCore
 
     public function renderView()
     {
+        if (!Module::isEnabled('mppaymentstocarriers')) {
+            return parent::renderView();
+        }
+
         $this->toolbar_title = $this->l('Payment');
         unset($this->toolbar_btn['back']);
 

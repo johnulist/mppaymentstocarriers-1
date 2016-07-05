@@ -4,6 +4,10 @@ class Hook extends HookCore
 {
     public static function getHookModuleExecList($hookName = null)
     {
+        if (!Module::isEnabled('mppaymentstocarriers')) {
+            return parent::getHookModuleExecList($hookName);
+        }
+        
         $context = Context::getContext();
         $idCache = 'hook_module_exec_list_'.(isset($context->shop->id) ? '_'.$context->shop->id : '').((isset($context->customer)) ? '_'.$context->customer->id : '');
         if (!Cache::isStored($idCache) || $hookName == 'displayPayment' || $hookName == 'displayPaymentEU' || $hookName == 'displayBackOfficeHeader') {

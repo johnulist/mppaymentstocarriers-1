@@ -4,6 +4,10 @@ class Carrier extends CarrierCore
 {
     public function delete()
     {
+        if (!Module::isEnabled('mppaymentstocarriers')) {
+            return parent::delete();
+        }
+
         if (!parent::delete()) {
             return false;
         }
