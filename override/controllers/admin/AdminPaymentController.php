@@ -186,7 +186,7 @@ class AdminPaymentController extends AdminPaymentControllerCore
 
         // link to modules page
         if (isset($this->payment_modules[0])) {
-            $token_modules = Tools::getAdminToken('AdminModules'.(int)Tab::getIdFromClassName('AdminModules').(int)$this->context->employee->id);
+            $token_modules = Tools::getAdminToken('AdminModules'.(int)Tab::getIdFromClassName('AdminModules').(int) $this->context->employee->id);
         }
 
         $displayRestrictions = false;
@@ -212,7 +212,7 @@ class AdminPaymentController extends AdminPaymentControllerCore
                 'identifier' => 'id_group',
                 'icon' => 'icon-group',
             ),
-            array('items' =>Country::getCountries($this->context->language->id),
+            array('items' => Country::getCountries($this->context->language->id),
                 'title' => $this->l('Country restrictions'),
                 'desc' => $this->l('Please mark each checkbox for the country, or countries, in which you want the payment module(s) to be available.'),
                 'name_id' => 'country',
@@ -277,7 +277,7 @@ class AdminPaymentController extends AdminPaymentControllerCore
             'ps_base_uri' => __PS_BASE_URI__,
             'payment_modules' => $this->payment_modules,
             'url_submit' => self::$currentIndex.'&token='.$this->token,
-            'shop_context' => $shopContext
+            'shop_context' => $shopContext,
         );
 
         return AdminController::renderView();

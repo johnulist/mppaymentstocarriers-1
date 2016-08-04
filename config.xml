@@ -2,7 +2,7 @@
 <module>
 	<name>mppaymentstocarriers</name>
 	<displayName><![CDATA[Payments to carriers]]></displayName>
-	<version><![CDATA[1.1.1]]></version>
+	<version><![CDATA[1.1.2]]></version>
 	<description><![CDATA[Link payment methods to carriers]]></description>
 	<author><![CDATA[Mijn Presta]]></author>
 	<tab><![CDATA[administration]]></tab>
