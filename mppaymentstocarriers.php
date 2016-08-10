@@ -150,7 +150,7 @@ class MPPaymentsToCarriers extends Module
         if (!file_exists($pathOverride)) {
             return false;
         } else {
-            file_put_contents($pathOverride, preg_replace('#(\r\n|\r)#ism', "\n", file_get_contents($pathOverride)));
+            file_put_contents($pathOverride, preg_replace('#(\r\n|\r)#ism', "\n", Tools::file_get_contents($pathOverride)));
         }
         $patternEscapeCom = '#(^\s*?\/\/.*?\n|\/\*(?!\n\s+\* module:.*?\* date:.*?\* version:.*?\*\/).*?\*\/)#ism';
         // Check if there is already an override file, if not, we just need to copy the file
@@ -288,7 +288,7 @@ class MPPaymentsToCarriers extends Module
         if (!is_file($overridePath) || !is_writable($overridePath)) {
             return false;
         }
-        file_put_contents($overridePath, preg_replace('#(\r\n|\r)#ism', "\n", file_get_contents($overridePath)));
+        file_put_contents($overridePath, preg_replace('#(\r\n|\r)#ism', "\n", Tools::file_get_contents($overridePath)));
         if ($origPath) {
             // Get a uniq id for the class, because you can override a class (or remove the override) twice in the same session and we need to avoid redeclaration
             do {

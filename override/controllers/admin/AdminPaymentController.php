@@ -230,8 +230,7 @@ class AdminPaymentController extends AdminPaymentControllerCore
             foreach ($list['items'] as $keyItem => $item) {
                 $idName = $list['name_id'];
 
-                if ($idName === 'currency'
-                    && Tools::strpos($list['items'][$keyItem]['name'], '('.$list['items'][$keyItem]['iso_code'].')') === false) {
+                if ($idName === 'currency' && Tools::strpos($list['items'][$keyItem]['name'], '('.$list['items'][$keyItem]['iso_code'].')') === false) {
                     $list['items'][$keyItem]['name'] = sprintf(
                         $this->l('%1$s (%2$s)'),
                         $list['items'][$keyItem]['name'],

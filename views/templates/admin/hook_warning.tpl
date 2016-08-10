@@ -15,4 +15,4 @@
  *  @copyright 2016 Mijn Presta
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *}
-{l s='This module has not been hooked correctly for the following store(s):' mod='mpsameday'} {$shops|escape:'htmlall':'UTF-8'}. {l s='Please hook this module to %s for the listed store(s), otherwise the module might stop working.' mod='mpsameday' sprintf=[$hookName]}
+{l s='This module has not been hooked correctly for the following store(s):' mod='mppaymentstocarriers'} {$shops|escape:'htmlall':'UTF-8'}. {l s='Please hook this module to %s for the listed store(s), otherwise the module might stop working.' mod='mppaymentstocarriers' sprintf=[$hookName]}
