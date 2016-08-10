@@ -2,10 +2,10 @@
 <module>
 	<name>mppaymentstocarriers</name>
 	<displayName><![CDATA[Payments to carriers]]></displayName>
-	<version><![CDATA[1.1.2]]></version>
+	<version><![CDATA[1.2.0]]></version>
 	<description><![CDATA[Link payment methods to carriers]]></description>
 	<author><![CDATA[Mijn Presta]]></author>
 	<tab><![CDATA[administration]]></tab>
-	<is_configurable>0</is_configurable>
+	<is_configurable>1</is_configurable>
 	<need_instance>0</need_instance>
 </module>

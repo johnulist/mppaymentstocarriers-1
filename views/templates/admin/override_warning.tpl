@@ -1,5 +1,4 @@
-<?php
-/**
+{*
  * 2016 Mijn Presta
  *
  * NOTICE OF LICENSE
@@ -15,19 +14,6 @@
  *  @author    Michael Dekker <info@mijnpresta.nl>
  *  @copyright 2016 Mijn Presta
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- */
-
-$sql = array();
-
-$sql[] = 'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'module_carrier` (
-  `id_module` INT(11) UNSIGNED NOT NULL,
-  `id_shop` INT(11) UNSIGNED NOT NULL DEFAULT \'1\',
-  `id_reference` INT(11) NOT NULL,
-   PRIMARY KEY (`id_module`,`id_shop`, `id_reference`)
-) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;';
-
-foreach ($sql as $query) {
-    if (Db::getInstance()->execute($query) == false) {
-        return false;
-    }
-}
+*}
+{l s='Overrides are disabled. Go to %s - %s' mod='mppaymentstocarriers' sprintf=[$overrideMainTab, $overrideSubTab]}
+{l s='and make sure that the option' mod='mppaymentstocarriers'} "{$overrideOption|escape:'htmlall':'UTF-8'}" {l s='is set to' mod='mppaymentstocarriers'} "{$noText|escape:'htmlall':'UTF-8'}"

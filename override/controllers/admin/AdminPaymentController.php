@@ -181,13 +181,10 @@ class AdminPaymentController extends AdminPaymentControllerCore
         $shopContext = (!Shop::isFeatureActive() || Shop::getContext() == Shop::CONTEXT_SHOP);
         if (!$shopContext) {
             $this->tpl_view_vars = array('shop_context' => $shopContext);
+
             return parent::renderView();
         }
 
-        // link to modules page
-        if (isset($this->payment_modules[0])) {
-            $token_modules = Tools::getAdminToken('AdminModules'.(int)Tab::getIdFromClassName('AdminModules').(int) $this->context->employee->id);
-        }
 
         $displayRestrictions = false;
         foreach ($this->payment_modules as $module) {
@@ -219,7 +216,7 @@ class AdminPaymentController extends AdminPaymentControllerCore
                 'identifier' => 'id_country',
                 'icon' => 'icon-globe',
             ),
-            array('items' => Carrier::getCarriers($this->context->language->id),
+            array('items' => Carrier::getCarriers($this->context->language->id, false, false, false, null, Carrier::ALL_CARRIERS),
                 'title' => Translate::getModuleTranslation('mppaymentstocarriers', 'Carrier restrictions', 'strings'),
                 'desc' => Translate::getModuleTranslation('mppaymentstocarriers', 'Please mark each checkbox for the carrier for which you want the payment module(s) to be available.', 'strings'),
                 'name_id' => 'reference',
@@ -235,8 +232,11 @@ class AdminPaymentController extends AdminPaymentControllerCore
 
                 if ($idName === 'currency'
                     && Tools::strpos($list['items'][$keyItem]['name'], '('.$list['items'][$keyItem]['iso_code'].')') === false) {
-                    $list['items'][$keyItem]['name'] = sprintf($this->l('%1$s (%2$s)'), $list['items'][$keyItem]['name'],
-                        $list['items'][$keyItem]['iso_code']);
+                    $list['items'][$keyItem]['name'] = sprintf(
+                        $this->l('%1$s (%2$s)'),
+                        $list['items'][$keyItem]['name'],
+                        $list['items'][$keyItem]['iso_code']
+                    );
                 }
 
                 foreach ($this->payment_modules as $keyModule => $module) {

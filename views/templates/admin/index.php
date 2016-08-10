@@ -1,4 +1,4 @@
-<?php
+index.php<?php
 /**
  * 2016 Mijn Presta
  *
@@ -17,17 +17,12 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
-$sql = array();
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
 
-$sql[] = 'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'module_carrier` (
-  `id_module` INT(11) UNSIGNED NOT NULL,
-  `id_shop` INT(11) UNSIGNED NOT NULL DEFAULT \'1\',
-  `id_reference` INT(11) NOT NULL,
-   PRIMARY KEY (`id_module`,`id_shop`, `id_reference`)
-) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;';
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Cache-Control: post-check=0, pre-check=0', false);
+header('Pragma: no-cache');
 
-foreach ($sql as $query) {
-    if (Db::getInstance()->execute($query) == false) {
-        return false;
-    }
-}
+header('Location: ../');
+exit;

@@ -4,10 +4,10 @@ class Hook extends HookCore
 {
     public static function getHookModuleExecList($hookName = null)
     {
-        if (!Module::isEnabled('mppaymentstocarriers')) {
+        if (!Module::isEnabled('mppaymentstocarriers') || version_compare(_PS_VERSION_, '1.7.0.0', '>=')) {
             return parent::getHookModuleExecList($hookName);
         }
-        
+
         $context = Context::getContext();
         $idCache = 'hook_module_exec_list_'.(isset($context->shop->id) ? '_'.$context->shop->id : '').((isset($context->customer)) ? '_'.$context->customer->id : '');
         if (!Cache::isStored($idCache) || $hookName == 'displayPayment' || $hookName == 'displayPaymentEU' || $hookName == 'displayBackOfficeHeader') {
@@ -31,7 +31,7 @@ class Hook extends HookCore
 
             // SQL Request
             $sql = new DbQuery();
-            $sql->select('h.`name` as hook, m.`id_module`, h.`id_hook`, m.`name` as module');
+            $sql->select('h.`name` as hook, m.`id_module`, h.`id_hook`, m.`name` as module, h.`live_edit`');
             $sql->from('module', 'm');
             if ($hookName != 'displayBackOfficeHeader') {
                 $sql->join(Shop::addSqlAssociation('module', 'm', true, 'module_shop.enable_device & '.(int) Context::getContext()->getDevice()));
@@ -85,12 +85,12 @@ class Hook extends HookCore
                         'id_hook' => $row['id_hook'],
                         'module' => $row['module'],
                         'id_module' => $row['id_module'],
+                        'live_edit' => $row['live_edit'],
                     );
                 }
             }
             if ($hookName != 'displayPayment' && $hookName != 'displayPaymentEU' && $hookName != 'displayBackOfficeHeader') {
                 Cache::store($idCache, $list);
-                // @todo remove this in 1.6, we keep it in 1.5 for backward compatibility
                 self::$_hook_modules_cache_exec = $list;
             }
         } else {

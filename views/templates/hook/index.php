@@ -1,4 +1,4 @@
-index.php<?php
+<?php
 /**
  * 2016 Mijn Presta
  *

@@ -4,7 +4,7 @@ class PaymentModule extends PaymentModuleCore
 {
     public function install()
     {
-        if (!Module::isEnabled('mppaymentstocarriers')) {
+        if (!Module::isEnabled('mppaymentstocarriers') || version_compare(_PS_VERSION_, '1.7.0.0', '>=')) {
             return parent::install();
         }
 
@@ -49,14 +49,14 @@ class PaymentModule extends PaymentModuleCore
 
     public function uninstall()
     {
-        if (!Module::isEnabled('mppaymentstocarriers')) {
+        if (!Module::isEnabled('mppaymentstocarriers') || version_compare(_PS_VERSION_, '1.7.0.0', '>=')) {
             return parent::uninstall();
         }
 
-        if (!Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'module_country` WHERE `id_module` = '.(int)$this->id)
-            || !Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'module_currency` WHERE `id_module` = '.(int)$this->id)
-            || !Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'module_group` WHERE `id_module` = '.(int)$this->id)
-            || !Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'module_carrier` WHERE `id_module` = '.(int)$this->id)) {
+        if (!Db::getInstance()->delete('module_country', '`id_module` = '.(int) $this->id)
+            || !Db::getInstance()->delete('module_currency', '`id_module` = '.(int) $this->id)
+            || !Db::getInstance()->delete('module_group', '`id_module` = '.(int) $this->id)
+            || !Db::getInstance()->delete('module_carrier', 'id_module` = '.(int) $this->id)) {
             return false;
         }
 
@@ -65,7 +65,8 @@ class PaymentModule extends PaymentModuleCore
 
     public function addCheckboxCarrierRestrictionsForModule(array $shops = array())
     {
-        if (!Module::isEnabled('mppaymentstocarriers')) {
+
+        if (!Module::isEnabled('mppaymentstocarriers') || version_compare(_PS_VERSION_, '1.7.0.0', '>=')) {
             return parent::addCheckboxCountryRestrictionsForModule($shops);
         }
 
@@ -79,11 +80,16 @@ class PaymentModule extends PaymentModuleCore
             $carrierIds[] = $carrier['id_reference'];
         }
 
-        foreach ($shops as $s) {
+        foreach ($shops as $shop) {
             foreach ($carrierIds as $idCarrier) {
-                if (!Db::getInstance()->execute(
-                    'INSERT INTO `'._DB_PREFIX_.'module_carrier` (`id_module`, `id_shop`, `id_reference`)
-    VALUES ('.(int) $this->id.', "'.(int) $s.'", '.(int) $idCarrier.')')) {
+                if (!Db::getInstance()->insert(
+                    'module_carrier',
+                    array(
+                        'id_module' => (int) $this->id,
+                        'id_shop' => (int) $shop,
+                        'id_reference' => (int) $idCarrier,
+                    )
+                )) {
                     return false;
                 }
             }
