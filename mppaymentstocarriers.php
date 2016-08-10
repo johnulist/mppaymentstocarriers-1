@@ -126,6 +126,7 @@ class MPPaymentsToCarriers extends Module
             'module_confirmations' => $confirmations,
             'modulesServices' => $this->getTabName('AdminModules', (int) $this->context->language->id),
             'payment' => $this->getTabName('AdminPayment', (int) $this->context->language->id),
+            'paymentPage' => $this->context->link->getAdminLink('AdminPayment', true),
         ));
 
         return $this->context->smarty->fetch($this->local_path.'views/templates/admin/configure.tpl');
@@ -409,7 +410,7 @@ class MPPaymentsToCarriers extends Module
 
         return (
             Db::getInstance()->delete('cart_rule_carrier', '`id_carrier` = '.(int) $carrier->id)
-            && Db::getInstance()->delete('module_carrier', 'id_reference = '.(int) $carrier->id_reference)
+            && Db::getInstance()->delete('module_carrier', '`id_reference` = '.(int) $carrier->id_reference)
             && $carrier->deleteTaxRulesGroup(Shop::getShops(true, null, true))
         );
     }

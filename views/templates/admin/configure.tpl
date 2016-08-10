@@ -19,7 +19,7 @@
 	<h3><i class="icon icon-rocket"></i> {l s='Link carriers to payment methods' mod='mppaymentstocarriers'}</h3>
 	<p>
 		<strong>{l s='Link carriers to payment methods' mod='mppaymentstocarriers'}</strong><br />
-		{l s='Th' mod='mppaymentstocarriers'}
+		{l s='This module allows you to hide payment methods when a certain carrier is selected. You can use this to charge an additional fee when the custom for example chooses cash on delivery. On the configuration page "Modules and Services > Payment" you will see a new section where you can configure the restrictions (Carrier restrictions).' mod='mppaymentstocarriers'}
 	</p>
 
 	<strong>{l s='Quick start' mod='mppaymentstocarriers'}</strong><br />
@@ -52,4 +52,9 @@
 	<h3><i class="icon icon-warning"></i> {l s='Troubleshooter' mod='mppaymentstocarriers'}</h3>
 	{include file='./troubleshooter_info.tpl' module_errors=$module_errors module_warnings=$module_warnings module_confirmations=$module_confirmations}
 	<a href="{$current_page|escape:'htmlall':'UTF-8'}&fixitall=1" class="btn btn-default">{l s='Attempt to fix it all!' mod='mppaymentstocarriers'}</a>
+</div>
+
+<div class="panel">
+	<h3><i class="icon icon-truck"></i> {l s='Carrier restrictions' mod='mppaymentstocarriers'}</h3>
+	<div class="alert alert-info">{l s='You can configure your carrier restrictions on' mod='mppaymentstocarriers'} <a href="{$paymentPage|escape:'htmlall':'UTF-8'}">{l s='on this page' mod='mppaymentstocarriers'}</a>.</div>
 </div>

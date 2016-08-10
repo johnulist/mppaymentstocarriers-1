@@ -17,12 +17,13 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
-header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
+function upgrade_module_1_1_1($module)
+{
+    /** @var MPPaymentsToCarriers $module */
+    $module->removeOverride('AdminPaymentController');
+    $module->removeOverride('Hook');
+    $module->removeOverride('Carrier');
+    $module->removeOverride('PaymentModule');
 
-header('Cache-Control: no-store, no-cache, must-revalidate');
-header('Cache-Control: post-check=0, pre-check=0', false);
-header('Pragma: no-cache');
-
-header('Location: ../');
-exit;
+    return $module->installOverrides();
+}

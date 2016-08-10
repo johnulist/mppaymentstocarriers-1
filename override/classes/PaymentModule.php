@@ -13,16 +13,20 @@ class PaymentModule extends PaymentModuleCore
         }
 
         // Insert currencies availability
-        if ($this->currencies_mode == 'checkbox') {
-            if (!$this->addCheckboxCurrencyRestrictionsForModule()) {
-                return false;
+        try {
+            if ($this->currencies_mode == 'checkbox') {
+                if (!$this->addCheckboxCurrencyRestrictionsForModule()) {
+                    return false;
+                }
+            } elseif ($this->currencies_mode == 'radio') {
+                if (!$this->addRadioCurrencyRestrictionsForModule()) {
+                    return false;
+                }
+            } else {
+                Tools::displayError('No currency mode for payment module');
             }
-        } elseif ($this->currencies_mode == 'radio') {
-            if (!$this->addRadioCurrencyRestrictionsForModule()) {
-                return false;
-            }
-        } else {
-            Tools::displayError('No currency mode for payment module');
+        } catch (PrestaShopDatabaseException $e) {
+            Tools::dieOrLog($e->getMessage());
         }
 
         // Insert countries availability
@@ -56,7 +60,7 @@ class PaymentModule extends PaymentModuleCore
         if (!Db::getInstance()->delete('module_country', '`id_module` = '.(int) $this->id)
             || !Db::getInstance()->delete('module_currency', '`id_module` = '.(int) $this->id)
             || !Db::getInstance()->delete('module_group', '`id_module` = '.(int) $this->id)
-            || !Db::getInstance()->delete('module_carrier', 'id_module` = '.(int) $this->id)) {
+            || !Db::getInstance()->delete('module_carrier', '`id_module` = '.(int) $this->id)) {
             return false;
         }
 
@@ -75,20 +79,23 @@ class PaymentModule extends PaymentModuleCore
         }
 
         $carriers = Carrier::getCarriers((int) Context::getContext()->language->id);
-        $carrierIds = array();
+        $carrierReferences = array();
         foreach ($carriers as $carrier) {
-            $carrierIds[] = $carrier['id_reference'];
+            $carrierReferences[] = $carrier['id_reference'];
         }
 
         foreach ($shops as $shop) {
-            foreach ($carrierIds as $idCarrier) {
+            foreach ($carrierReferences as $idReference) {
                 if (!Db::getInstance()->insert(
                     'module_carrier',
                     array(
                         'id_module' => (int) $this->id,
                         'id_shop' => (int) $shop,
-                        'id_reference' => (int) $idCarrier,
-                    )
+                        'id_reference' => (int) $idReference,
+                    ),
+                    false,
+                    true,
+                    Db::INSERT_IGNORE
                 )) {
                     return false;
                 }
